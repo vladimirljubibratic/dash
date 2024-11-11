@@ -309,4 +309,4 @@ def update_figure(clickData, contents, n_clicks_export, filename, current_root):
 
 # Run the app
 if __name__ == "__main__":
-    app.run_server(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    app.run_server(debug=False)
