@@ -255,6 +255,10 @@ def update_figure(clickData, contents, n_clicks_export, filename, current_root):
     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
     G = build_graph()
 
+    # Log the context of the callback
+    logging.warning(f"Triggered by: {triggered_id}")
+    logging.warning(f"clickData: {clickData}, contents: {contents}, n_clicks_export: {n_clicks_export}")
+
     # Handle data upload
     if triggered_id == 'upload-data' and contents is not None:
         content_type, content_string = contents.split(',')
