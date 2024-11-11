@@ -9,8 +9,8 @@ import base64
 import tempfile
 import os
 
-# Set up logging for production with INFO level to reduce verbosity
-logging.basicConfig(level=logging.WARNING)
+# Set up logging for production with DEBUG level to capture detailed information
+logging.basicConfig(level=logging.DEBUG)
 
 # Example data source to be used initially
 initial_data = {
@@ -252,12 +252,13 @@ def update_figure(clickData, contents, n_clicks_export, filename, current_root):
     Combined callback function to handle both node clicks, data upload, and HTML export, updating the graph accordingly.
     """
     ctx = dash.callback_context
-    triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    triggered_id = ctx.triggered[0]['prop_id'].split('.')[0] if ctx.triggered else None
     G = build_graph()
 
     # Log the context of the callback
-    logging.warning(f"Triggered by: {triggered_id}")
-    logging.warning(f"clickData: {clickData}, contents: {contents}, n_clicks_export: {n_clicks_export}")
+    logging.debug(f"Callback context: {ctx.triggered}")
+    logging.debug(f"Triggered by: {triggered_id}")
+    logging.debug(f"clickData: {clickData}, contents: {contents}, n_clicks_export: {n_clicks_export}")
 
     # Handle data upload
     if triggered_id == 'upload-data' and contents is not None:
@@ -313,4 +314,4 @@ def update_figure(clickData, contents, n_clicks_export, filename, current_root):
 
 # Run the app
 if __name__ == "__main__":
-    app.run_server(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
+    app.run_server(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
